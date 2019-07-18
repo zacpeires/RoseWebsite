@@ -3,6 +3,7 @@ const app = express();
 const morgan = require('morgan');
 const path = require('path');
 const bodyParser = require('body-parser');
+const db = require('./db');
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
@@ -16,6 +17,10 @@ app.get('*', (req, res) => {
 })
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
-    console.log(`Your server, listening on port ${port}`)
-});
+
+db.sync()
+  .then(function(){
+    app.listen(port, function () {
+      console.log(`Your server, listening on port ${port}`);
+    })
+  })
