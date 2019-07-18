@@ -31,7 +31,7 @@ dbStore.sync();
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/apiRoutes', require('./apiRoutes'))
+app.use('/api', require('./api'))
 
 app.use(express.static(path.join(__dirname, '..',  '/public')));
 app.get('*', (req, res) => {

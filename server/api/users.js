@@ -49,5 +49,5 @@ router.delete('/logout', (req, res, next) => {
   req.logout();
   res.session.destroy();
   res.sendStatus(204)
-})
-;
+  
+});
