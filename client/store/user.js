@@ -26,7 +26,6 @@ export const createUser = userDetails => {
 export const me = () => {
     return async dispatch => {
         const { data } = await axios.get('/api/users/me');
-        console.log(data)
         dispatch(getUser(data) || defaultUser);
     };
 };
