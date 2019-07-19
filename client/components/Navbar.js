@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+// import brandImage from "../../public/images/rose-hunter-brand.png"
 
 class Navbar extends Component {
     constructor() {
@@ -13,7 +14,30 @@ class Navbar extends Component {
 
     render() {
         return (
-            <div></div>
+            <nav className="navbar">
+                <div className="navbar__top-section">
+                    <h3>Registered Nutritional Therapist</h3>
+                    <p>FdSc, Dip Ion</p>
+                </div>
+                <div className="navbar__main">
+                    <div className="navbar__main--icon-section">
+                        {/* <img src={brandImage} /> */}
+                    </div>
+                    <div className="navbar__main--dropdown-buttons">
+                            {/* <ul>
+                                <li>
+                                    About
+                                </li>
+                                <li>
+                                    Blog
+                                </li>
+                                <li>
+                                    Recipes
+                                </li>
+                            </ul> */}
+                    </div>
+                </div>
+            </nav>
         )
     }
 }

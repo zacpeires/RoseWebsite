@@ -3,7 +3,7 @@ import { Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { me } from './store';
 import { Route } from 'react-router-dom';
-import { Home } from './components';
+import { Home, SubmitBlogPage } from './components';
 
 class Routes extends Component {
     constructor() {
@@ -24,7 +24,8 @@ class Routes extends Component {
         return (
             <div className="routes__container">
                 <Switch>
-                    <Route path="/" component={Home} />
+                    {/* <Route exact path="/" component={Home} /> */}
+                    <Route path="/blog-post" component={SubmitBlogPage} />
                 </Switch>
             </div>
         );
