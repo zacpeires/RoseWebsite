@@ -24,17 +24,24 @@ class Navbar extends Component {
                         {/* <img src={brandImage} /> */}
                     </div>
                     <div className="navbar__main--dropdown-buttons">
-                            {/* <ul>
-                                <li>
+                            <ul className="content-dropdown__items">
+                                <li className="content-dropdown__item">
                                     About
                                 </li>
-                                <li>
+                                <li className="content-dropdown__item">
                                     Blog
                                 </li>
-                                <li>
+                                <li className="content-dropdown__item">
                                     Recipes
                                 </li>
-                            </ul> */}
+                                <li className="content-dropdown__item">
+                                    Massage
+                                </li>
+                                <li className="content-dropdown__item">
+                                    Contact
+                                </li>
+                            </ul>
+                            <hr />
                     </div>
                 </div>
             </nav>
