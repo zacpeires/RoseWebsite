@@ -22,41 +22,35 @@ export default class SubmitRecipe extends Component {
 
   handleChange(event) {
 
-    /*
-1. dynamically change the names of rows for ingredients and sets when iterating/mapping out.
-2. split the names to find out their position in the ingredients and steps array.
-3. use the spread operator in handlechange to dynamically add in the new data
-    */
+    if (event.target.name.includes('method')) {
+        const indexOfRow = event.target.name.slice(6)
+        console.log(event.target.name)
+        console.log(indexOfRow)
+        let methodState = this.state.method
+        methodState[indexOfRow] = event.target.value
 
-    // if (event.target.name.includes('method')) {
-    //     const indexOfRow = parseInt(event.target.name.slice(5));
-    //     let methodState = this.state.method
-    //     methodState[indexOfRow] = event.target.value
-
-    //     this.setState({
-    //         method: methodState
-    //     })
-    // } 
-    // else 
+        this.setState({
+            method: methodState
+        })
+    } 
+    else 
     if (event.target.name.includes('ingredients')) {
         const indexOfRow = event.target.name.slice(11)
         let ingredientsState = this.state.ingredients
-        ingredientsState[indexOfRow -1] = event.target.value
+        ingredientsState[indexOfRow] = event.target.value
         console.log(indexOfRow)
         console.log(event.target.name)
-
-
 
         this.setState({
             ingredients: ingredientsState
         })
     } 
-    // else {
+    else {
 
-    // this.setState({
-    //   [event.target.name]: event.target.value
-    // });
-// }
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+}
 
 console.log(this.state)
   }
@@ -99,13 +93,14 @@ console.log(this.state)
             onChange={this.handleChange}
           />
           <div className="recipe-form__form--multi-part-section">
-            {numberOfIngredientsLength.map(ingredient => {
+            {numberOfIngredientsLength.map((ingredient, index) => {
               return (
                 <input
                 className="recipe-form__ingredients-inputs"
-                  name={`ingredients${this.state.numberOfIngredients}`}
+                  name={`ingredients${index}`}
+                  key={index}
                   type="text"
-                  value={this.state.ingredients[this.state.numberOfIngredients]}
+                  value={this.state.ingredients[index]}
                   onChange={this.handleChange}
                 />
               );
@@ -116,12 +111,13 @@ console.log(this.state)
           </div>
           {/* Add additional ingredient- drop down additional input beneath */}
           <div className="recipe-form__form--multi-part-section">
-            {NumberOfStepsLength.map(steps => {
+            {NumberOfStepsLength.map((steps, index) => {
               return (
                 <textarea
-                  name={`method${this.state.numberOfSteps -1}`}
+                  name={`method${index}`}
+                  key={index}
                   type="text"
-                  value={this.state.method[this.state.numberOfSteps -1]}
+                  value={this.state.method[index]}
                   onChange={this.handleChange}
                 />
               );
