@@ -10,23 +10,43 @@ export default class SubmitRecipe extends Component {
       description: [],
       ingredients: [],
       method: [],
-      categoryOfFood: []
+      categoryOfFood: [],
+      numberOfIngredients: 1
     };
 
-    this.handleChange = handleChange.bind(this);
-    this.handleSubmit = handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.addAdditionalRow = this.addAdditionalRow.bind(this);
   }
 
-  handleChange(event) {}
+  componentDidMount() {
+
+  }
+
+  handleChange(event) {
+      this.setState({
+          [event.target.name]: event.target.value
+      })
+
+  }
 
   handleSubmit(event) {
     event.preventDefault();
   }
 
+  addAdditionalRow() {
+    this.setState({
+        numberOfIngredients: this.state.numberOfIngredients+=1
+    });
+  }
+
   render() {
+    let numberOfIngredientsLength = new Array(this.state.numberOfIngredients).fill(0)
+
+
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
+      <div className="recipe-form">
+        <form onSubmit={this.handleSubmit} className="recipe-form__form">
           <input
             name="recipeName"
             type="text"
@@ -39,20 +59,30 @@ export default class SubmitRecipe extends Component {
             value={this.state.description}
             onChange={this.handleChange}
           />
-          <input
-            name="ingredients"
-            type="text"
-            value={this.state.ingredients}
-            onChange={this.handleChange}
-            placeholder={"1"}
-          />
+          <div className="recipe-form__form--multi-part-section">
+        { numberOfIngredientsLength.map(ingredient => {
+            return (
+                <textarea
+                name="ingredients"
+                type="text"
+                value={this.state.ingredients}
+                onChange={this.handleChange}
+              />
+            )
+        })
+        }
+          <button onClick={this.addAdditionalRow}>+</button>
+          </div>
           {/* Add additional ingredient- drop down additional input beneath */}
-          <input
+         <div className="recipe-form__form--multi-part-section">
+          <textarea
             name="method"
             type="text"
             value={this.state.method}
             onChange={this.handleChange}
           />
+          <button>+</button>
+          </div>
           {/* Add additional method row - drop down additional input beneath */}
           <input
             name="categoryOfFood"
