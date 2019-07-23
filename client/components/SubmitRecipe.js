@@ -28,28 +28,37 @@ export default class SubmitRecipe extends Component {
 3. use the spread operator in handlechange to dynamically add in the new data
     */
 
-    if (event.target.name.includes('method')) {
-        const indexOfRow = parseInt(event.target.name.slice(5));
-        let methodState = this.state.method
-        methodState[indexOfRow] = event.target.value
+    // if (event.target.name.includes('method')) {
+    //     const indexOfRow = parseInt(event.target.name.slice(5));
+    //     let methodState = this.state.method
+    //     methodState[indexOfRow] = event.target.value
 
-        this.setState({
-            method: methodState
-        })
-    } else if (event.target.name.includes('ingredients')) {
-        const indexOfRow = parseInt(event.target.name.slice(10));
-        let ingredientsState = this.state.method
-        ingredientsState[indexOfRow] = event.target.value
+    //     this.setState({
+    //         method: methodState
+    //     })
+    // } 
+    // else 
+    if (event.target.name.includes('ingredients')) {
+        const indexOfRow = event.target.name.slice(11)
+        let ingredientsState = this.state.ingredients
+        ingredientsState[indexOfRow -1] = event.target.value
+        console.log(indexOfRow)
+        console.log(event.target.name)
+
+
 
         this.setState({
             ingredients: ingredientsState
         })
-    } else {
+    } 
+    // else {
 
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-}
+    // this.setState({
+    //   [event.target.name]: event.target.value
+    // });
+// }
+
+console.log(this.state)
   }
 
   handleSubmit(event) {
@@ -94,9 +103,9 @@ export default class SubmitRecipe extends Component {
               return (
                 <input
                 className="recipe-form__ingredients-inputs"
-                  name={`ingredients${this.state.ingredients.length}`}
+                  name={`ingredients${this.state.numberOfIngredients}`}
                   type="text"
-                  value={this.state.ingredients[this.state.ingredients.length]}
+                  value={this.state.ingredients[this.state.numberOfIngredients]}
                   onChange={this.handleChange}
                 />
               );
@@ -110,9 +119,9 @@ export default class SubmitRecipe extends Component {
             {NumberOfStepsLength.map(steps => {
               return (
                 <textarea
-                  name={`method${this.state.method.length}`}
+                  name={`method${this.state.numberOfSteps -1}`}
                   type="text"
-                  value={this.state.method}
+                  value={this.state.method[this.state.numberOfSteps -1]}
                   onChange={this.handleChange}
                 />
               );
