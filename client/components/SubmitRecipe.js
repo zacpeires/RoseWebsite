@@ -11,7 +11,8 @@ export default class SubmitRecipe extends Component {
       ingredients: [],
       method: [],
       categoryOfFood: [],
-      numberOfIngredients: 1
+      numberOfIngredients: 1,
+      numberOfSteps: 1
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -19,30 +20,59 @@ export default class SubmitRecipe extends Component {
     this.addAdditionalRow = this.addAdditionalRow.bind(this);
   }
 
-  componentDidMount() {
-
-  }
-
   handleChange(event) {
-      this.setState({
-          [event.target.name]: event.target.value
-      })
 
+    /*
+1. dynamically change the names of rows for ingredients and sets when iterating/mapping out.
+2. split the names to find out their position in the ingredients and steps array.
+3. use the spread operator in handlechange to dynamically add in the new data
+    */
+
+    if (event.target.name.includes('method')) {
+        const indexOfRow = parseInt(event.target.name.slice(5));
+        let methodState = this.state.method
+        methodState[indexOfRow] = event.target.value
+
+        this.setState({
+            method: methodState
+        })
+    } else if (event.target.name.includes('ingredients')) {
+        const indexOfRow = parseInt(event.target.name.slice(10));
+        let ingredientsState = this.state.method
+        ingredientsState[indexOfRow] = event.target.value
+
+        this.setState({
+            ingredients: ingredientsState
+        })
+    } else {
+
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+}
   }
 
   handleSubmit(event) {
     event.preventDefault();
   }
 
-  addAdditionalRow() {
-    this.setState({
-        numberOfIngredients: this.state.numberOfIngredients+=1
-    });
+  addAdditionalRow(sectionName) {
+    if (sectionName === "ingredient") {
+      this.setState({
+        numberOfIngredients: (this.state.numberOfIngredients += 1)
+      });
+    } else {
+      this.setState({
+        numberOfSteps: (this.state.numberOfSteps += 1)
+      });
+    }
   }
 
   render() {
-    let numberOfIngredientsLength = new Array(this.state.numberOfIngredients).fill(0)
-
+    let numberOfIngredientsLength = new Array(
+      this.state.numberOfIngredients
+    ).fill(0);
+    let NumberOfStepsLength = new Array(this.state.numberOfSteps).fill(0);
 
     return (
       <div className="recipe-form">
@@ -53,35 +83,41 @@ export default class SubmitRecipe extends Component {
             value={this.state.value}
             onChange={this.handleChange}
           />
-          <input
+          <textarea
             name="description"
             type="text"
             value={this.state.description}
             onChange={this.handleChange}
           />
           <div className="recipe-form__form--multi-part-section">
-        { numberOfIngredientsLength.map(ingredient => {
-            return (
-                <textarea
-                name="ingredients"
-                type="text"
-                value={this.state.ingredients}
-                onChange={this.handleChange}
-              />
-            )
-        })
-        }
-          <button onClick={this.addAdditionalRow}>+</button>
+            {numberOfIngredientsLength.map(ingredient => {
+              return (
+                <input
+                className="recipe-form__ingredients-inputs"
+                  name={`ingredients${this.state.ingredients.length}`}
+                  type="text"
+                  value={this.state.ingredients[this.state.ingredients.length]}
+                  onChange={this.handleChange}
+                />
+              );
+            })}
+            <button onClick={() => this.addAdditionalRow("ingredient")}>
+              +
+            </button>
           </div>
           {/* Add additional ingredient- drop down additional input beneath */}
-         <div className="recipe-form__form--multi-part-section">
-          <textarea
-            name="method"
-            type="text"
-            value={this.state.method}
-            onChange={this.handleChange}
-          />
-          <button>+</button>
+          <div className="recipe-form__form--multi-part-section">
+            {NumberOfStepsLength.map(steps => {
+              return (
+                <textarea
+                  name={`method${this.state.method.length}`}
+                  type="text"
+                  value={this.state.method}
+                  onChange={this.handleChange}
+                />
+              );
+            })}
+            <button onClick={() => this.addAdditionalRow("method")}>+</button>
           </div>
           {/* Add additional method row - drop down additional input beneath */}
           <input
