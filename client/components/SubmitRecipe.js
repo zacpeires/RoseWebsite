@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
-export default class SubmitRecipe extends Component {
+import { gotSingleRecipe } from "../store";
+class SubmitRecipe extends Component {
   constructor() {
     super();
 
     this.state = {
       recipeName: "",
-      description: [],
+      description: "",
       ingredients: [],
       method: [],
-      categoryOfFood: [],
+      typeOfFood: '',
       numberOfIngredients: 1,
       numberOfSteps: 1
     };
@@ -24,8 +24,6 @@ export default class SubmitRecipe extends Component {
 
     if (event.target.name.includes('method')) {
         const indexOfRow = event.target.name.slice(6)
-        console.log(event.target.name)
-        console.log(indexOfRow)
         let methodState = this.state.method
         methodState[indexOfRow] = event.target.value
 
@@ -38,9 +36,6 @@ export default class SubmitRecipe extends Component {
         const indexOfRow = event.target.name.slice(11)
         let ingredientsState = this.state.ingredients
         ingredientsState[indexOfRow] = event.target.value
-        console.log(indexOfRow)
-        console.log(event.target.name)
-
         this.setState({
             ingredients: ingredientsState
         })
@@ -51,12 +46,19 @@ export default class SubmitRecipe extends Component {
       [event.target.name]: event.target.value
     });
 }
-
-console.log(this.state)
   }
 
   handleSubmit(event) {
     event.preventDefault();
+  
+    let newRecipe = this.state;
+    // newRecipe.delete(numberOfIngredients);
+    // newRecipe.delete(numberOfSteps);
+
+    // this.props.gotSingleRecipe(newRecipe)
+
+    console.log(newRecipe);
+
   }
 
   addAdditionalRow(sectionName) {
@@ -109,7 +111,6 @@ console.log(this.state)
               +
             </button>
           </div>
-          {/* Add additional ingredient- drop down additional input beneath */}
           <div className="recipe-form__form--multi-part-section">
             {NumberOfStepsLength.map((steps, index) => {
               return (
@@ -124,9 +125,8 @@ console.log(this.state)
             })}
             <button onClick={() => this.addAdditionalRow("method")}>+</button>
           </div>
-          {/* Add additional method row - drop down additional input beneath */}
           <input
-            name="categoryOfFood"
+            name="typeOfFood"
             type="text"
             value={this.state.category}
             onChange={this.handleChange}
@@ -137,3 +137,9 @@ console.log(this.state)
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  gotSingleRecipe: (newRecipe) => dispatch(gotSingleRecipe(newRecipe))
+});
+
+export default connect(null, mapDispatchToProps)(SubmitRecipe);

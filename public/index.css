@@ -73,9 +73,19 @@ hr {
     border-radius: 5px;
     /* border-color: unset; */
 
+
 }
 
 .recipe-form__form--multi-part-section {
     width: 100%;
     display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.recipe-form__form--multi-part-section textarea {
+
+}
+
+.recipe-form__form--multi-part-section input {
 }
