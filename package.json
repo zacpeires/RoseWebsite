@@ -16,7 +16,7 @@
     "body-parser": "^1.19.0",
     "connect-session-sequelize": "^6.0.0",
     "crypt": "0.0.2",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-session": "^1.16.2",
     "history": "^4.9.0",
     "html-webpack-plugin": "^3.2.0",
